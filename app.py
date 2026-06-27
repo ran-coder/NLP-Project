@@ -47,14 +47,12 @@ def load_dataset_insights(file_path):
     text_col = 'text'       
     emotion_col = 'label'   
     
-    # Map numerical categories directly to standard string keys
     df[emotion_col] = df[emotion_col].map(EMOTION_MAPPING)
     
     # Calculate dataset metrics
     dist_df = df[emotion_col].value_counts().reset_index()
     dist_df.columns = ['Emotion', 'Count']
     
-    # Set up your exact training pipeline dependencies
     stop_words = set(stopwords.words('english'))
     lem = WordNetLemmatizer()
     
@@ -66,10 +64,8 @@ def load_dataset_insights(file_path):
             insights[emotion] = {"words": ["None Found"]}
             continue
             
-        # Get raw list of sentences for this specific emotion subclass
         corpus = emotion_df[text_col].astype(str).tolist()
         
-        # --- MIRRORING YOUR EXACT DATA PROCESSING PIPELINE ---
         lower_corpus = [i.lower() for i in corpus]
         words = [word_tokenize(i) for i in lower_corpus]
         
@@ -81,7 +77,6 @@ def load_dataset_insights(file_path):
                     lemmatized = lem.lemmatize(cleaned_token)
                     cleaned_tokens_pool.append(lemmatized)
         
-        # Calculate the 6 most common words based on your lemmatized tokens
         common_words = [item[0] for item in Counter(cleaned_tokens_pool).most_common(6)]
             
         insights[emotion] = {
@@ -90,7 +85,6 @@ def load_dataset_insights(file_path):
         
     return dist_df, insights
 
-# Initialize backend models
 with st.spinner("Initializing models into memory... This may take a moment..."):
     try:
         models = load_all_models()
@@ -98,7 +92,6 @@ with st.spinner("Initializing models into memory... This may take a moment..."):
         st.error(f"Failed to load backend inference models: {e}")
         st.stop()
 
-# Build insights index 
 with st.spinner("Compiling insights from local parquet engine..."):
     try:
         data_distribution, dynamic_insights = load_dataset_insights(PARQUET_FILE_PATH)
@@ -107,12 +100,8 @@ with st.spinner("Compiling insights from local parquet engine..."):
         st.info("Check that column names match your `.parquet` dataset schema exactly.")
         st.stop()
 
-# Navigation panel setup
 tab1, tab2 = st.tabs(["🔮 Real-Time Multi-Model Inference", "📊 Dataset Analytics Engine"])
 
-# -----------------------------------------------------------------------------
-# TAB 1: RUN INFERENCE PIPELINE
-# -----------------------------------------------------------------------------
 with tab1:
     st.subheader("Interactive Evaluation Array")
     
@@ -171,14 +160,10 @@ with tab1:
                     fig.update_layout(showlegend=False, height=200, margin=dict(l=0, r=0, t=0, b=0))
                     st.plotly_chart(fig, use_container_width=True, key=f"chart_{name}")
 
-# -----------------------------------------------------------------------------
-# TAB 2: METRICS VIEW
-# -----------------------------------------------------------------------------
 with tab2:
     st.subheader("Data Distribution & Balance Analytics")
     st.markdown(f"Direct logs compiled from storage instance: `{PARQUET_FILE_PATH}`")
     
-    # 1. Class Distribution Graphs (Side-by-Side)
     col_graph1, col_graph2 = st.columns(2)
     
     with col_graph1:
@@ -230,7 +215,6 @@ with tab2:
 
     st.markdown("---")
 
-    # 2. FEATURE: Common Words Associated with Each Emotion (Using your exact logic)
     st.markdown("### **🔍 Linguistic Feature Explorer**")
     st.markdown("Select a class category below to inspect top tokens parsed using your definitive preprocessing notebook rules:")
     
