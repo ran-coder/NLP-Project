@@ -61,7 +61,7 @@ def predict_emotion(text, model_name, model_info):
     emergency_fallback = dict(zip(ORDERED_LABELS, [0.0] * len(ORDERED_LABELS)))
     
     try:
-        # --- Category A: Deep Learning BERT ---
+        # Deep Learning BERT
         if model_info["type"] == "dl":
             tokenizer = model_info["tokenizer"]
             inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=128, padding=True)
@@ -71,7 +71,7 @@ def predict_emotion(text, model_name, model_info):
             prob_map = {EMOTION_MAPPING[i]: probs[i] for i in range(len(probs))}
             probabilities = [prob_map[label] for label in ORDERED_LABELS]
             
-        # --- Category B: ML Classifier with TF-IDF Vectorizer ---
+        #ML Classifier with TF-IDF Vectorizer
         elif model_info["type"] == "ml_tfidf":
             vectorizer = model_info["extractor"]
             features = vectorizer.transform([text])
@@ -94,7 +94,7 @@ def predict_emotion(text, model_name, model_info):
                     predicted_label = str(pred).lower().strip()
                 probabilities = [1.0 if label == predicted_label else 0.0 for label in ORDERED_LABELS]
 
-        # --- Category C: ML Classifier with Word2Vec Mean Embeddings ---
+        #ML Classifier with Word2Vec Mean Embeddings
         elif model_info["type"] == "ml_w2v":
             w2v_model = model_info["extractor"]
             features = get_word2vec_average(text, w2v_model)
