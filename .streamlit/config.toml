@@ -1,0 +1,9 @@
+[theme]
+# Sets the preset primary theme to Light
+base = "light"
+
+# Customizes the color scheme for a clean look
+primaryColor = "#FF4B4B"          # Accent color (used for your "Execute" button)
+backgroundColor = "#FFFFFF"      # Main page background color
+secondaryBackgroundColor = "#F0F2F6" # Background for widgets, text areas, and tabs
+textColor = "#31333F"            # Main text color for readability
