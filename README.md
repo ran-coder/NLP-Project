@@ -71,7 +71,7 @@ ds = load_dataset("dair-ai/emotion")
 > **Important:** Run notebooks in this exact order to regenerate all models and feature files.
 
 ```
-1. preprocess.ipynb       ← clean, balance, and save balanced_data.csv
+1. preprocess2.ipynb       ← clean, balance, and save balanced_data.csv
 2. ml_model.ipynb         ← train TF-IDF + SVM/LR models, Word2Vec + SVM/LR models
 4. bert_model.ipynb        ← fine-tune BERT transformer
 ```
@@ -96,25 +96,25 @@ Make sure to saves all the outputs to `models/` .
 - Captures semantic similarity between words
 - Average pooling may dilute strong sentiment signals
 
-### Advanced Model (BERT Transformer)
+### Advanced Model (DistilBert Transformer)
 
-**`SamLowe/roberta-base-go_emotions`**
-- Pre-trained transformer fine-tuned on GoEmotions dataset
-- Ekman-collapsed to 6 emotion categories
-- Captures contextual meaning, negation, and nuance
-- Highest accuracy; requires GPU for optimal training speed
-
----
+**`distilbert/distilbert-base-uncased`**
+- A smaller, faster version of the classic BERT language model.
+- "Uncased": It ignores capitalization, treating "Happy" and "happy" exactly the same.
+- It can process a maximum text length of 512 tokens (words/sub-words) at a time.
+- Best For: Understanding text (e.g., sorting emotions, sentiment analysis, or tagging words).
+- Worst For: Generating new text or writing stories (it is designed to analyze language, not create it).
+- Why use it: It is the perfect choice for real-time web apps because it loads quickly and uses very little memory.
 
 ## 📊 Results Summary
 
 | Model | Accuracy | Notes |
 |-------|----------|-------|
-| TF-IDF + SVM | — | Strong baseline |
-| TF-IDF + LR | — | Most interpretable |
-| Word2Vec + SVM | — | Semantic-aware |
-| Word2Vec + LR | — | Semantic-aware |
-| BERT | — | Best overall |
+| TF-IDF + SVM | 91.75 | Strong baseline |
+| TF-IDF + LR | 91.73 |   Strong baseline |
+| Word2Vec + SVM | 64.69 | Semantic-aware |
+| Word2Vec + LR | 64.61 | Semantic-aware |
+| BERT | 95.00 | Best overall |
 
 
 ---
