@@ -107,7 +107,7 @@ with tab1:
     
     user_input = st.text_area(
         "Enter target social text string for vector evaluation:",
-        placeholder="I really hate how frustrating this system error is, it's driving me completely crazy.",
+        placeholder="Enter your social text here.",
         max_chars=500
     )
     
@@ -162,7 +162,7 @@ with tab1:
 
 with tab2:
     st.subheader("Data Distribution & Balance Analytics")
-    st.markdown(f"Direct logs compiled from storage instance: `{PARQUET_FILE_PATH}`")
+    # st.markdown(f"Direct logs compiled from storage instance: `{PARQUET_FILE_PATH}`")
     
     col_graph1, col_graph2 = st.columns(2)
     
@@ -187,7 +187,7 @@ with tab2:
     with col_graph2:
         st.markdown("### **🔄 After: Balanced Distribution (Capped)**")
         
-        CAP_VALUE = 10000  
+        CAP_VALUE = 8000  
         
         balanced_distribution = data_distribution.copy()
         balanced_distribution['Count'] = balanced_distribution['Count'].apply(lambda x: min(x, CAP_VALUE))
