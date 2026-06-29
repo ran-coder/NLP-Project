@@ -1,5 +1,5 @@
 kagglehub
-pandas
+pandas==2.2.2
 numpy
 seaborn
 matplotlib

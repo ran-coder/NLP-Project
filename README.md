@@ -19,17 +19,18 @@ This project explores and compares multiple feature extraction and classificatio
 
 **Models implemented:**
 
-| Extractor | Classifier | File |
-|-----------|-----------|------|
-| TF-IDF | SVM (LinearSVC) | `tfidf_extractor.ipynb` |
-| TF-IDF | Logistic Regression | `tfidf_extractor.ipynb` |
-| Word2Vec (avg pooling) | SVM | `w2v_extractor.ipynb` |
-| Word2Vec (avg pooling) | LR | `w2v_extractor.ipynb` |
-| BERT (`roberta-base-go_emotions`) | Fine-tuned Transformer | `bert_train.ipynb` |
+| Extractor | Classifier 
+|-----------|-----------
+| TF-IDF | SVM (LinearSVC) 
+| TF-IDF | Logistic Regression 
+| Word2Vec (avg pooling) | SVM 
+| Word2Vec (avg pooling) | LR 
+| BERT (`roberta-base-go_emotions`) | Fine-tuned Transformer
 
 
 ## ⚙️ Setup & Installation
 
+Use Python Version 3.12
 ### 1. Clone the repository
 
 ```bash
@@ -63,9 +64,6 @@ The raw dataset is not included in this repository. Download it from HuggingFace
 from datasets import load_dataset
 ds = load_dataset("dair-ai/emotion")
 ```
-
-Or download `balanced_data.csv` from [Google Drive — insert link here] and place it in the `data/` folder.
-
 ---
 
 ## 🚀 Run Order
@@ -73,13 +71,12 @@ Or download `balanced_data.csv` from [Google Drive — insert link here] and pla
 > **Important:** Run notebooks in this exact order to regenerate all models and feature files.
 
 ```
-1. preprocess2.ipynb       ← clean, balance, and save balanced_data.csv
-2. tfidf_extractor.ipynb   ← train TF-IDF + SVM/LR models
-3. w2v_extractor.ipynb     ← train Word2Vec + SVM/LR models
-4. bert_train.ipynb        ← fine-tune BERT transformer
+1. preprocess.ipynb       ← clean, balance, and save balanced_data.csv
+2. ml_model.ipynb         ← train TF-IDF + SVM/LR models, Word2Vec + SVM/LR models
+4. bert_model.ipynb        ← fine-tune BERT transformer
 ```
 
-Each notebook loads from `balanced_data.csv` and saves outputs to `models/` automatically.
+Make sure to saves all the outputs to `models/` .
 
 ---
 
@@ -88,7 +85,7 @@ Each notebook loads from `balanced_data.csv` and saves outputs to `models/` auto
 ### Traditional ML Models (TF-IDF & Word2Vec)
 
 **TF-IDF + SVM / LR**
-- Vectorizer: `TfidfVectorizer(max_features=500, norm='l2')`
+- Vectorizer: `TfidfVectorizer(max_features=5000, norm='l2')`
 - Captures word importance and discriminative features
 - Strong baseline; interpretable feature weights
 - Fast to train and predict
